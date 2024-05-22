@@ -1,0 +1,146 @@
+// import React, { useState } from 'react';
+
+
+// function LayoutBuilder() {
+//   const vertical = `flex flex-row justify-center items-center`; 
+//   const horizontal = `flex flex-col justify-center items-center`; 
+//   const [partitions, setPartitions] = useState([{ id: 1, color: getRandomColor(), width: '100', height: '100', position: vertical }]);
+//   const [counter, setCounter] = useState(1);
+
+//   // Function to split a partition either vertically or horizontally
+//   const splitPartition = (index, direction) => {
+//     const newPartitions = [...partitions];
+//     const partitionToSplit = newPartitions[index];
+
+//     if (direction === 'V') {
+//       partitionToSplit.width = partitionToSplit.width/2;
+//       console.log("V:", partitionToSplit.width);
+//     } else {
+//       partitionToSplit.height = '50';
+//       console.log("H:", partitionToSplit.height);
+//     }
+
+//     const newColor = getRandomColor();
+//     const newPartition = { id: counter + 1, color: newColor, width: '50%', height: '50%' };
+//     setCounter(counter + 1);
+
+//     newPartitions.splice(index + 1, 0, newPartition);
+//     setPartitions(newPartitions);
+//   };
+
+//   // Function to remove a partition
+//   const removePartition = (index) => {
+//     const newPartitions = [...partitions];
+//     newPartitions.splice(index, 1);
+//     setPartitions(newPartitions);
+//   };
+
+//   // Function to generate a random color
+//   function getRandomColor() {
+//     const letters = '0123456789ABCDEF';
+//     let color = '#';
+//     for (let i = 0; i < 6; i++) {
+//       color += letters[Math.floor(Math.random() * 16)];
+//     }
+//     return color;
+//   }
+
+
+
+//   return (
+//     <div className='flex flex-row justify-center items-center'>
+//       {partitions.map((partition, index) => (
+//         <div
+//           key={partition.id}
+//           className=""
+//           style={{ backgroundColor: partition.color, width: partition.width+'%', height: partition.height+'%' }}
+//         >
+//           <div>
+//             {partitions.length > 1 && (
+//               <button  className="text-xl w-2 h-2" onClick={() => removePartition(index)}>-</button>
+//             )}
+//             <div className="splitButtons gap-2 flex justify-center items-center">
+//               <button className='px-3 rounded-md bg-white border' onClick={() => splitPartition(index, 'V')}>V</button>
+//               <button className='px-3 rounded-md bg-white border' onClick={() => splitPartition(index, 'H')}>H</button>
+//             </div>
+//           </div>
+          
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default LayoutBuilder;
+// import React from 'react';
+
+// function BoxTile({ width, height }) {
+//   // Recursive function to generate box tiles
+//   const generateBoxTiles = (w, h) => {
+//     // Base case: stop recursion when width or height is less than 10px
+//     if (w < 100 || h < 100) {
+//       return null;
+//     }
+
+//     // Split box horizontally or vertically based on aspect ratio
+//     if (w > h) {
+//       return (
+//         <div className="box-tile" style={{ width: '100%', height: '50%', display: 'flex', flexDirection: 'column' }}>
+//           <BoxTile width={w} height={h / 2} />
+//           <BoxTile width={w} height={h / 2} />
+//         </div>
+//       );
+//     } else {
+//       return (
+//         <div className="box-tile" style={{ width: '50%', height: '100%', display: 'flex', flexDirection: 'row' }}>
+//           <BoxTile width={w / 2} height={h} />
+//           <BoxTile width={w / 2} height={h} />
+//         </div>
+//       );
+//     }
+//   };
+
+//   return (
+//     <div className="box-tile" style={{ width, height, border: '1px solid black' }}>
+//       {generateBoxTiles(width, height)}
+//     </div>
+//   );
+// }
+
+// export default BoxTile;
+
+
+import React, { useState } from 'react';
+
+function LayoutBuilder() {
+  const [divbox, setDivbox] = useState( [
+    {width: 400, height: 400, count: 1}
+  ])
+  const [width, setWidth] = useState(400);
+  const [height, setHeight] = useState(400);
+
+  // Function to split the box into halves horizontally
+  const splitHorizontally = () => {
+    setHeight(height / 2);
+  };
+
+  // Function to split the box into halves vertically
+  const splitVertically = () => {
+    setWidth(width / 2);
+  };
+
+  return (
+    <div className="flex flex-row justify-center items-center max-w-[400px]">
+      <div className="box bg-black" style={{ width: width + 'px', height: height + 'px' }}>
+        {width > 10 && (
+          <button className='bg-red-300 p-5' onClick={splitHorizontally}>Split Horizontally</button>
+        )}
+        {height > 10 && (
+          <button className='bg-green-400 p-5' onClick={splitVertically}>Split Vertically</button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default LayoutBuilder;
